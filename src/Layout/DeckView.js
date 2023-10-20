@@ -97,8 +97,7 @@ function DeckView({ decks, setDecks, deleteDeckWithId }) {
           type="button"
           className="btn btn-danger"
           onClick={(event) => {
-            deleteDeckWithId(deck.id);
-            history.push("/");
+            deleteDeckWithId(deck.id, url, history);
           }}
         >
           Delete

@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from "react";
-import { Link as Linkle } from "react-router-dom";
+import { Link as Linkle, useRouteMatch, useHistory } from "react-router-dom";
 import { listDecks } from "../utils/api";
 
 function HomeScreen({ decks, setDecks, deleteDeckWithId }) {
+  const {url} = useRouteMatch();
+  const history = useHistory();
   useEffect(() => {
     async function loadDecks() {
       const loadedDecks = await listDecks();
@@ -33,7 +35,7 @@ function HomeScreen({ decks, setDecks, deleteDeckWithId }) {
             type="button"
             className="btn btn-danger"
             // Use passed-in deck deletion function to update state
-            onClick={(event) => deleteDeckWithId(deck.id)}
+            onClick={(event) => deleteDeckWithId(deck.id, url, history)}
           >
             Delete
           </button>
