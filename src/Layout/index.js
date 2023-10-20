@@ -21,7 +21,7 @@ function Layout() {
     }
 
     loadDecks();
-  }, [decks]);
+  }, []);
 
   const deleteDeckWithId = (deckId) => {
     if (
@@ -44,29 +44,25 @@ function Layout() {
           {/* TODO: Implement the screen starting here */}
           <Switch>
             <Route exact path="/">
-              <HomeScreen decks={decks} deleteDeckWithId={deleteDeckWithId} />
+              <HomeScreen deleteDeckWithId={deleteDeckWithId} />
             </Route>
             <Route path="/decks/new">
               <NewDeck decks={decks} setDecks={setDecks} />
             </Route>
             <Route exact path="/decks/:deckId">
-              <DeckView
-                decks={decks}
-                setDecks={setDecks}
-                deleteDeckWithId={deleteDeckWithId}
-              />
+              <DeckView deleteDeckWithId={deleteDeckWithId} />
             </Route>
             <Route path="/decks/:deckId/edit">
               <EditDeck decks={decks} setDecks={setDecks} />
             </Route>
             <Route path="/decks/:deckId/cards/new">
-              <AddCard decks={decks} setDecks={setDecks} />
+              <AddCard />
             </Route>
             <Route path="/decks/:deckId/cards/:cardId/edit">
-              <EditCard decks={decks} />
+              <EditCard />
             </Route>
             <Route exact path="/decks/:deckId/study">
-              <DeckStudy decks={decks} />
+              <DeckStudy />
             </Route>
             <Route>
               <NotFound />
@@ -76,7 +72,36 @@ function Layout() {
       </>
     );
   }
-  return "Loading...";
+  return (
+    <>
+      <Header />
+      <div className="container">
+        {/* TODO: Implement the screen starting here */}
+        <Switch>
+          <Route exact path="/">
+            <HomeScreen deleteDeckWithId={deleteDeckWithId} />
+          </Route>
+          <Route path="/decks/new">Loading...</Route>
+          <Route exact path="/decks/:deckId">
+            <DeckView deleteDeckWithId={deleteDeckWithId} />
+          </Route>
+          <Route path="/decks/:deckId/edit">Loading...</Route>
+          <Route path="/decks/:deckId/cards/new">
+            <AddCard />
+          </Route>
+          <Route path="/decks/:deckId/cards/:cardId/edit">
+            <EditCard />
+          </Route>
+          <Route exact path="/decks/:deckId/study">
+            <DeckStudy />
+          </Route>
+          <Route>
+            <NotFound />
+          </Route>
+        </Switch>
+      </div>
+    </>
+  );
 }
 
 export default Layout;
