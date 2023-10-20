@@ -58,7 +58,7 @@ function Layout() {
               <DeckView decks={decks} setDecks={setDecks} deleteDeckWithId={deleteDeckWithId} />
             </Route>
             <Route path="/decks/:deckId/edit">
-              <EditDeck decks={decks} setDecks={setDecks} />
+              <EditDeck />
             </Route>
             <Route path="/decks/:deckId/cards/new">
               <AddCard />
@@ -91,7 +91,9 @@ function Layout() {
           <Route exact path="/decks/:deckId">
             Loading...
           </Route>
-          <Route path="/decks/:deckId/edit">Loading...</Route>
+          <Route path="/decks/:deckId/edit">
+            <EditDeck />
+          </Route>
           <Route path="/decks/:deckId/cards/new">
             <AddCard />
           </Route>

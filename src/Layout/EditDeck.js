@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { updateDeck, readDeck } from "../utils/api";
 import { Link as Linkle, useHistory, useParams } from "react-router-dom";
 
-function EditDeck({ decks, setDecks }) {
+function EditDeck({}) {
   const history = useHistory();
   const params = useParams();
   const [deck, setDeck] = useState();
@@ -35,7 +35,6 @@ function EditDeck({ decks, setDecks }) {
     event.preventDefault();
     const result = await updateDeck(formData);
     // Update state for display while decks are reloaded from API
-    setDecks([...decks, result]);
     history.push(`/decks/${deck.id}`);
   }
 
