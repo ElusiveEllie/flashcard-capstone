@@ -2,8 +2,7 @@ import React, {useState, useEffect} from "react";
 import { Link as Linkle } from "react-router-dom";
 import { listDecks } from "../utils/api";
 
-function HomeScreen({ deleteDeckWithId }) {
-  const [decks, setDecks] = useState();
+function HomeScreen({ decks, setDecks, deleteDeckWithId }) {
   useEffect(() => {
     async function loadDecks() {
       const loadedDecks = await listDecks();
@@ -13,6 +12,7 @@ function HomeScreen({ deleteDeckWithId }) {
     loadDecks();
   }, []);
   if (decks) {
+    // Map decks out to array of different cards displaying each deck's information
     const deckLayout = decks.map((deck) => (
       <div className="card" key={deck.id}>
         <div className="card-body">
@@ -32,6 +32,7 @@ function HomeScreen({ deleteDeckWithId }) {
           <button
             type="button"
             className="btn btn-danger"
+            // Use passed-in deck deletion function to update state
             onClick={(event) => deleteDeckWithId(deck.id)}
           >
             Delete

@@ -13,12 +13,16 @@ function AddCard() {
 
     loadDeck();
   }, []);
+
+  // Use initial state to have form be blank after each card is added
   const initialFormState = {
     front: "",
     back: "",
   };
+
   const [formData, setFormData] = useState({ ...initialFormState });
   const handleChange = ({ target }) => {
+    // Update formData as new information is typed in
     setFormData({
       ...formData,
       [target.name]: target.value,
@@ -31,6 +35,7 @@ function AddCard() {
     setFormData({ ...initialFormState });
   }
 
+  // Wait for formData to be filled in during useEffect before displaying page
   if (deck) {
     return (
       <div>
@@ -47,6 +52,7 @@ function AddCard() {
             </li>
           </ol>
         </nav>
+
         <h1>Add Card</h1>
         <form onSubmit={handleSubmit}>
           <label htmlFor="cardFront" className="form-label">

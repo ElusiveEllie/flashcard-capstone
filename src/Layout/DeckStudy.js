@@ -6,6 +6,7 @@ function DeckStudy() {
   const history = useHistory();
   const params = useParams();
   const [deck, setDeck] = useState();
+  // Set initial state of cardView to be on the first card's front
   const [cardView, setCardView] = useState({ card: 0, isFront: true });
   useEffect(() => {
     async function loadDeck() {
@@ -15,8 +16,12 @@ function DeckStudy() {
 
     loadDeck();
   }, []);
+
+  // Wait for deck to load in before displaying page
   if (deck) {
+    // Function to move to next card
     const nextCard = (cardView) => {
+      // Check that final card's back is being shown
       if (cardView.card === deck.cards.length - 1 && !cardView.isFront) {
         return (
           <button
@@ -28,6 +33,7 @@ function DeckStudy() {
                   `Restart cards?\n\nClick "Cancel" to return to the home page.`
                 )
               ) {
+                // Reset state to first card's front
                 setCardView({ card: 0, isFront: true });
               } else {
                 history.push("/");
@@ -38,6 +44,7 @@ function DeckStudy() {
           </button>
         );
       } else if (!cardView.isFront) {
+        // If not on final card's back, move to next card's front
         return (
           <button
             type="button"
@@ -51,6 +58,8 @@ function DeckStudy() {
         );
       }
     };
+
+    // Function to display card
     const showCard = (cardView) => {
       return (
         <div className="card">
@@ -66,6 +75,7 @@ function DeckStudy() {
             type="button"
             className="btn btn-secondary"
             onClick={() =>
+              // Flip between front and back
               setCardView({ ...cardView, isFront: !cardView.isFront })
             }
           >
@@ -76,6 +86,7 @@ function DeckStudy() {
       );
     };
 
+    // Deck length of less than 3 cannot be studied, gives option to add more cards to deck
     if (deck.cards.length < 3) {
       return (
         <>
@@ -92,6 +103,7 @@ function DeckStudy() {
               </li>
             </ol>
           </nav>
+
           <h1>{deck.name}: Study</h1>
           <h2>Not enough cards.</h2>
           <p>
@@ -122,6 +134,7 @@ function DeckStudy() {
             </li>
           </ol>
         </nav>
+
         <h1>Study: {deck.name}</h1>
         {showCard(cardView)}
       </>

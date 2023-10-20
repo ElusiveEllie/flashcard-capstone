@@ -7,13 +7,14 @@ import {
 } from "react-router-dom";
 import { deleteCard, readDeck } from "../utils/api";
 
-function DeckView({ deleteDeckWithId }) {
+function DeckView({ decks, setDecks, deleteDeckWithId }) {
   const { url } = useRouteMatch();
   const params = useParams();
   const [deck, setDeck] = useState();
   const [cards, setCards] = useState();
   const history = useHistory();
   useEffect(() => {
+    // Load in deck using API and set state to the results
     async function loadDeck() {
       const loadedDeck = await readDeck(params.deckId);
       setDeck(loadedDeck);
@@ -22,10 +23,11 @@ function DeckView({ deleteDeckWithId }) {
 
     loadDeck();
   }, []);
-  if (deck) {
-    
-    
-    const tempCards = deck.cards.map((card) => (
+
+  // Wait for Effect to finish before displaying page
+  if (cards) {   
+    // Map flashcards out into Bootcamp cards to display flashcard info
+    const displayCards = cards.map((card) => (
       <div key={card.id} className="card">
         <p className="card-text">{card.front}</p>
         <p className="card-text">{card.back}</p>
@@ -51,6 +53,7 @@ function DeckView({ deleteDeckWithId }) {
         )
       ) {
         deleteCard(cardId);
+        // Set state to filter out current cards
         setCards((currentCards) =>
           currentCards.filter(
             (ignored, index) => currentCards[index].id !== cardId
@@ -89,6 +92,7 @@ function DeckView({ deleteDeckWithId }) {
             Add Card
           </button>
         </Linkle>
+        {/* Use delete deck function from index.js */}
         <button
           type="button"
           className="btn btn-danger"
@@ -101,7 +105,7 @@ function DeckView({ deleteDeckWithId }) {
         </button>
 
         <h2>Cards</h2>
-        {tempCards}
+        {displayCards}
       </>
     );
   }

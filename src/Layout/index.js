@@ -14,6 +14,7 @@ import { deleteDeck } from "../utils/api";
 
 function Layout() {
   const [decks, setDecks] = useState();
+  // Load in decks to state to pass into some pages
   useEffect(() => {
     async function loadDecks() {
       const loadedDecks = await listDecks();
@@ -23,6 +24,7 @@ function Layout() {
     loadDecks();
   }, []);
 
+  // Functionality for deleting deck, gets passed into deck view
   const deleteDeckWithId = (deckId) => {
     if (
       window.confirm("Delete this deck?\n\nYou will not be able to recover it.")
@@ -44,13 +46,13 @@ function Layout() {
           {/* TODO: Implement the screen starting here */}
           <Switch>
             <Route exact path="/">
-              <HomeScreen deleteDeckWithId={deleteDeckWithId} />
+              <HomeScreen decks={decks} setDecks={setDecks} deleteDeckWithId={deleteDeckWithId} />
             </Route>
             <Route path="/decks/new">
               <NewDeck decks={decks} setDecks={setDecks} />
             </Route>
             <Route exact path="/decks/:deckId">
-              <DeckView deleteDeckWithId={deleteDeckWithId} />
+              <DeckView decks={decks} setDecks={setDecks} deleteDeckWithId={deleteDeckWithId} />
             </Route>
             <Route path="/decks/:deckId/edit">
               <EditDeck decks={decks} setDecks={setDecks} />
@@ -72,6 +74,7 @@ function Layout() {
       </>
     );
   }
+  // Set certain pages to display "Loading..." while waiting on decks to load, but other pages can be returned as is since they make their own API call
   return (
     <>
       <Header />
@@ -79,11 +82,11 @@ function Layout() {
         {/* TODO: Implement the screen starting here */}
         <Switch>
           <Route exact path="/">
-            <HomeScreen deleteDeckWithId={deleteDeckWithId} />
+            Loading...
           </Route>
           <Route path="/decks/new">Loading...</Route>
           <Route exact path="/decks/:deckId">
-            <DeckView deleteDeckWithId={deleteDeckWithId} />
+            Loading...
           </Route>
           <Route path="/decks/:deckId/edit">Loading...</Route>
           <Route path="/decks/:deckId/cards/new">

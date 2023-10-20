@@ -14,6 +14,7 @@ function EditCard() {
       const loadedCard = await readCard(params.cardId);
       setDeck(loadedDeck);
       setCard(loadedCard);
+      // Fill in formData with card's original info to populate default values
       setFormData({
         front: loadedCard.front,
         back: loadedCard.back,
@@ -26,6 +27,7 @@ function EditCard() {
   }, []);
 
   const handleChange = ({ target }) => {
+    // Update formData as new information is typed in
     setFormData({
       ...formData,
       [target.name]: target.value,
@@ -38,6 +40,7 @@ function EditCard() {
     history.push(`/decks/${deck.id}`);
   }
 
+  // Wait for formData to be filled in during useEffect before displaying page
   if (formData) {
     return (
       <div>
@@ -54,6 +57,7 @@ function EditCard() {
             </li>
           </ol>
         </nav>
+
         <h1>Edit Card</h1>
         <form onSubmit={handleSubmit}>
           <label htmlFor="cardFront" className="form-label">

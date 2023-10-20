@@ -11,6 +11,7 @@ function EditDeck({ decks, setDecks }) {
     async function loadDeck() {
       const loadedDeck = await readDeck(params.deckId);
       setDeck(loadedDeck);
+      // Fill in formData with deck's original info to populate default values
       setFormData({
         name: loadedDeck.name,
         description: loadedDeck.description,
@@ -23,6 +24,7 @@ function EditDeck({ decks, setDecks }) {
   }, []);
 
   const handleChange = ({ target }) => {
+    // Update formData as new information is typed in
     setFormData({
       ...formData,
       [target.name]: target.value,
@@ -32,9 +34,12 @@ function EditDeck({ decks, setDecks }) {
   async function handleSubmit(event) {
     event.preventDefault();
     const result = await updateDeck(formData);
+    // Update state for display while decks are reloaded from API
     setDecks([...decks, result]);
     history.push(`/decks/${deck.id}`);
   }
+
+  // Wait for formData to be filled in during useEffect before displaying page
   if (formData) {
     return (
       <div>
@@ -51,6 +56,7 @@ function EditDeck({ decks, setDecks }) {
             </li>
           </ol>
         </nav>
+
         <h1>Edit Deck</h1>
         <form onSubmit={handleSubmit}>
           <label htmlFor="deckName" className="form-label">
