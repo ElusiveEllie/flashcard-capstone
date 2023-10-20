@@ -9,7 +9,7 @@ import EditDeck from "./EditDeck";
 import AddCard from "./AddCard";
 import EditCard from "./EditCard";
 import { listDecks } from "../utils/api";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, useRouteMatch, useHistory } from "react-router-dom";
 import { deleteDeck } from "../utils/api";
 
 function Layout() {
@@ -25,16 +25,21 @@ function Layout() {
   }, []);
 
   // Functionality for deleting deck, gets passed into deck view
-  const deleteDeckWithId = (deckId) => {
+  const {url} = useRouteMatch();
+  const history = useHistory();
+  async function deleteDeckWithId (deckId) {
     if (
       window.confirm("Delete this deck?\n\nYou will not be able to recover it.")
     ) {
-      deleteDeck(deckId);
+      await deleteDeck(deckId);
       setDecks((currentDecks) =>
         currentDecks.filter(
           (ignored, index) => currentDecks[index].id !== deckId
         )
       );
+      if (url !== "/") {
+        history.push("/");
+      }
     }
   };
 
