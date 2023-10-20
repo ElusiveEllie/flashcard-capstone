@@ -18,7 +18,7 @@ function EditCard() {
         front: loadedCard.front,
         back: loadedCard.back,
         id: loadedCard.id,
-        deckId: loadedCard.id,
+        deckId: loadedCard.deckId,
       });
     }
 
