@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { updateCard, readDeck, readCard } from "../utils/api";
 import { Link as Linkle, useHistory, useParams } from "react-router-dom";
+import CardDetails from "./CardDetails";
 
 function EditCard() {
   const history = useHistory();
@@ -60,30 +61,7 @@ function EditCard() {
 
         <h1>Edit Card</h1>
         <form onSubmit={handleSubmit}>
-          <label htmlFor="cardFront" className="form-label">
-            Front:
-          </label>
-          <textarea
-            type="text"
-            id="cardFront"
-            name="front"
-            className="form-control"
-            placeholder="Front side of card"
-            value={formData.front}
-            onChange={handleChange}
-          />
-          <label htmlFor="cardBack" className="form-label">
-            Back:
-          </label>
-          <textarea
-            type="text"
-            id="cardBack"
-            name="back"
-            className="form-control"
-            placeholder="Back side of card"
-            value={formData.back}
-            onChange={handleChange}
-          />
+        {CardDetails(formData, handleChange)}
           <Linkle to={`/decks/${deck.id}`}>
             <button type="button" className="btn btn-secondary">
               Cancel

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { updateDeck, readDeck } from "../utils/api";
 import { Link as Linkle, useHistory, useParams } from "react-router-dom";
+import DeckDetails from "./DeckDetails";
 
 function EditDeck({}) {
   const history = useHistory();
@@ -58,30 +59,7 @@ function EditDeck({}) {
 
         <h1>Edit Deck</h1>
         <form onSubmit={handleSubmit}>
-          <label htmlFor="deckName" className="form-label">
-            Name:
-          </label>
-          <input
-            type="text"
-            id="deckName"
-            name="name"
-            className="form-control"
-            placeholder="Deck Name"
-            value={formData.name}
-            onChange={handleChange}
-          />
-          <label htmlFor="deckDescription" className="form-label">
-            Description:
-          </label>
-          <textarea
-            type="text"
-            id="deckDescription"
-            name="description"
-            className="form-control"
-            placeholder="Brief description of the deck"
-            value={formData.description}
-            onChange={handleChange}
-          />
+        {DeckDetails(formData, handleChange)}
           <Linkle to={`/decks/${deck.id}`}>
             <button type="button" className="btn btn-secondary">
               Cancel
